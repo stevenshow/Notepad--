@@ -1,0 +1,5 @@
+node_modules/
+main/
+yarn.lock
+*.md
+*.svg
