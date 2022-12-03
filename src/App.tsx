@@ -1,39 +1,82 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import AppBar from './AppBar';
 
 function App() {
-	const [count, setCount] = useState(0);
+  console.log(window.ipcRenderer);
 
-	return (
-		<div className="App">
-			<div className="flex items-center justify-center">
-				<a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-					<img src="/vite.svg" className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://reactjs.org" target="_blank" rel="noreferrer">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
-				<a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer">
-					<img src="/typescript.svg" className="logo react" alt="TypeScript logo" />
-				</a>
-				<a href="https://tailwindcss.com/" target="_blank" rel="noreferrer">
-					<img src="/tailwindcss.svg" className="logo" alt="TailwindCSS logo" />
-				</a>
-				<a href="https://eslint.org/" target="_blank" rel="noreferrer">
-					<img src="/eslint.svg" className="logo" alt="ESLint logo" />
-				</a>
-			</div>
-			<h1>Vite + React 18 + TS + TailwindCSS + ESLint</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">Click on the logos to learn more</p>
-		</div>
-	);
+  const [isOpen, setOpen] = useState(false);
+  const [isSent, setSent] = useState(false);
+  const [fromMain, setFromMain] = useState<string | null>(null);
+
+  const handleToggle = () => {
+    if (isOpen) {
+      setOpen(false);
+      setSent(false);
+    } else {
+      setOpen(true);
+      setFromMain(null);
+    }
+  };
+  const sendMessageToElectron = () => {
+    if (window.Main) {
+      window.Main.sendMessage("Hello I'm from React World");
+    } else {
+      setFromMain('You are in a Browser, so no Electron functions are available');
+    }
+    setSent(true);
+  };
+
+  useEffect(() => {
+    if (isSent && window.Main)
+      window.Main.on('message', (message: string) => {
+        setFromMain(message);
+      });
+  }, [fromMain, isSent]);
+
+  return (
+    <div className="flex flex-col h-screen">
+      {window.Main && (
+        <div className="flex-none">
+          <AppBar />
+        </div>
+      )}
+      <div className="flex-auto">
+        <div className=" flex flex-col justify-center items-center h-full bg-gray-800 space-y-4">
+          <h1 className="text-2xl text-gray-200">Vite + React + Typescript + Electron + Tailwind</h1>
+          <button
+            className="bg-yellow-400 py-2 px-4 rounded focus:outline-none shadow hover:bg-yellow-200"
+            onClick={handleToggle}
+          >
+            Click Me
+          </button>
+          {isOpen && (
+            <div className="flex flex-col space-y-4 items-center">
+              <div className="flex space-x-3">
+                <h1 className="text-xl text-gray-50">💝 Welcome 💝, now send a message to the Main 📩📩</h1>
+                <button
+                  onClick={sendMessageToElectron}
+                  className=" bg-green-400 rounded px-4 py-0 focus:outline-none hover:bg-green-300"
+                >
+                  Send
+                </button>
+              </div>
+              {isSent && (
+                <div>
+                  <h4 className=" text-green-500">Message sent!!</h4>
+                </div>
+              )}
+              {fromMain && (
+                <div>
+                  {' '}
+                  <h4 className=" text-yellow-200">{fromMain}</h4>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;

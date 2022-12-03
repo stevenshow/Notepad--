@@ -1,23 +1,37 @@
-# Vite + React 18 + TS + TailwindCSS + ESLint
+# Vite + React + Typescript + Electron - Starter
 
-This is a starter template for React (TypeScript) using Vite. I've also added TailwindCSS so you can style your app without writing CSS code, and ESLint to analyze your code and suggest some optimizations.
+![Vite + React + Typescript + Tailwind + Electron Starter](Screenshot.jpg)
 
-You can find more about these technologies in the following links: [Vite](https://vitejs.dev/), [React](https://reactjs.org/), [Typescript](https://www.typescriptlang.org/), [TailwindCSS](https://tailwindcss.com/), [Eslint](https://eslint.org/).
+> It is a simple starter template without unnecessary packages.
 
-## How to install
+This very simple Starter template, utilizes [Vite](https://github.com/vitejs/vite), [Tailwind](https://tailwindcss.com/), [React](https://reactjs.org/), [Typescript](https://www.typescriptlang.org/) and [Electron](https://electronjs.org/).
 
-Just run the next command in a terminal (make sure that you have installed NPM).
+By default, the React framework is used for the interface, but you can easily use any other framework such as Vue, Preact, Angular, Svelte or anything else.
 
-```
-npx degit dserranoc/vite-reactts18-eslint-tailwindcss project-name
-```
+> Vite is framework agnostic
 
-## How to start
+## Installation
 
-After the installation of the dependencies run:
+Clone this repo and install all dependencies  
+`yarn` or `npm install`
 
-```
-npm run dev
-```
+## Development
 
-Made with ❤️ by Daniel Serrano Cobos
+`yarn dev` or `npm run dev`
+
+## Build
+
+`yarn build` or `npm run build`
+
+## Publish
+
+`yarn dist` or `npm run dist`
+
+## More advanced templates  
+
+If you are looking for more advanced templates than this, please go to one of the following links (these are some other links out of the **[awesome-vite](https://github.com/vitejs/awesome-vite)** repo) or you can help me make this template better 🙂  
+
+Links: 
+- [vite-react-electron](https://github.com/caoxiemeihao/vite-react-electron)
+- [electron-vite-react](https://github.com/twstyled/electron-vite-react)
+- [vite-electron-esbuild-starter](https://github.com/jctaoo/vite-electron-esbuild-starter)
