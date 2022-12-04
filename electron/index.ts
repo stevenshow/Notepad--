@@ -1,9 +1,8 @@
 // Native
-import { join } from 'path';
-
 // Packages
-import { BrowserWindow, app, ipcMain, IpcMainEvent } from 'electron';
+import { BrowserWindow, IpcMainEvent, app, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
+import { join } from 'path';
 
 const height = 600;
 const width = 800;
@@ -13,6 +12,8 @@ function createWindow() {
 	const window = new BrowserWindow({
 		width,
 		height,
+		minWidth: width,
+		minHeight: height,
 		//  change to false to use AppBar
 		frame: false,
 		show: true,
