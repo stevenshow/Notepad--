@@ -1,48 +1,19 @@
 import react from '@vitejs/plugin-react';
-import { UserConfig, ConfigEnv } from 'vite';
 import { join } from 'path';
+import { ConfigEnv, UserConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 const srcRoot = join(__dirname, 'src');
 
 export default ({ command }: ConfigEnv): UserConfig => {
-	// DEV
-	if (command === 'serve') {
-		return {
-			root: srcRoot,
-			base: '/',
-			plugins: [react()],
-			resolve: {
-				alias: {
-					'/@': srcRoot,
-				},
-			},
-			build: {
-				outDir: join(srcRoot, '/out'),
-				emptyOutDir: true,
-				rollupOptions: {},
-			},
-			server: {
-				port: process.env.PORT === undefined ? 3000 : +process.env.PORT,
-			},
-			optimizeDeps: {
-				exclude: ['path'],
-			},
-		};
-	}
-	// PROD
-	return {
+	const baseConfig: UserConfig = {
 		root: srcRoot,
-		base: './',
-		plugins: [react()],
+		base: '/',
+		plugins: [react(), tsconfigPaths({ projects: [join(__dirname, 'tsconfig.json')] })],
 		resolve: {
 			alias: {
 				'/@': srcRoot,
 			},
-		},
-		build: {
-			outDir: join(srcRoot, '/out'),
-			emptyOutDir: true,
-			rollupOptions: {},
 		},
 		server: {
 			port: process.env.PORT === undefined ? 3000 : +process.env.PORT,
@@ -51,4 +22,16 @@ export default ({ command }: ConfigEnv): UserConfig => {
 			exclude: ['path'],
 		},
 	};
+
+	return command === 'serve'
+		? baseConfig // dev
+		: {
+				...baseConfig,
+				base: '/.',
+				build: {
+					outDir: join(__dirname, 'dist'),
+					emptyOutDir: true,
+					rollupOptions: {},
+				},
+		  }; // prod
 };

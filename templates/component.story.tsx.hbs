@@ -1,0 +1,14 @@
+import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import {{name}}, { {{name}}Props } from '../components/{{name}}';
+
+export default {
+  /* 👇
+  * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
+  * to learn how to generate automatic titles
+  */
+  title: '{{name}}',
+  component: {{name}},
+} as ComponentMeta<typeof {{name}}>;
+
+export const Primary: ComponentStory<typeof {{name}}> = (props: {{name}}Props) => <{{name}} {...{props}} />;

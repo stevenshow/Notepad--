@@ -3,3 +3,5 @@ main/
 yarn.lock
 *.md
 *.svg
+
+templates/**/*.hbs
