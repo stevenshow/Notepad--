@@ -55,6 +55,7 @@
 		"eslint-plugin-prettier": "4.2.1",
 		"eslint-plugin-react": "^7.30.1",
 		"husky": "^8.0.0",
+		"lint-staged": "^13.1.0",
 		"postcss": "^8.4.12",
 		"prettier": "^2.8.0",
 		"prettier-plugin-tailwindcss": "^0.2.0",
@@ -71,5 +72,8 @@
 		"directories": {
 			"buildResources": "resources"
 		}
+	},
+	"lint-staged": {
+		"*.{ts,tsx,js}": "eslint"
 	}
 }
