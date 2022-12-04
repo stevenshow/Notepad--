@@ -28,7 +28,9 @@
 		"lint": "eslint . --ext js,ts,tsx",
 		"lint:fix": "eslint . --ext js,ts,tsx --fix",
 		"format": "prettier --write .",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"storybook": "start-storybook -p 6006",
+		"build-storybook": "build-storybook"
 	},
 	"dependencies": {
 		"@vitejs/plugin-react": "^2.0.0",
@@ -38,12 +40,21 @@
 		"vite": "^3.0.0"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.20.5",
+		"@storybook/addon-actions": "^6.5.14",
+		"@storybook/addon-essentials": "^6.5.14",
+		"@storybook/addon-interactions": "^6.5.14",
+		"@storybook/addon-links": "^6.5.14",
+		"@storybook/builder-vite": "^0.2.5",
+		"@storybook/react": "^6.5.14",
+		"@storybook/testing-library": "^0.0.13",
 		"@types/node": "^18.0.15",
 		"@types/react": "^18.0.6",
 		"@types/react-dom": "^18.0.6",
 		"@typescript-eslint/eslint-plugin": "5.33.0",
 		"@typescript-eslint/parser": "5.33.0",
 		"autoprefixer": "^10.4.4",
+		"babel-loader": "^8.3.0",
 		"concurrently": "^7.6.0",
 		"electron": "^22.0.0",
 		"electron-builder": "^22.14.13",
