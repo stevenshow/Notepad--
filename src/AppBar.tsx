@@ -28,7 +28,7 @@ function AppBar() {
 					>
 						&#8211;
 					</button>
-					<button onClick={handleToggle} className="undraggable px-6 pt-1 hover:bg-gray-500 lg:px-5">
+					<button onClick={handleToggle} className="undraggable px-4 pt-1 hover:bg-gray-500 lg:px-5">
 						{isMaximize ? '\u2752' : '⃞'}
 					</button>
 					<button
@@ -41,22 +41,8 @@ function AppBar() {
 			</div>
 			<div className="undraggable bg-gray-800 text-white">
 				<div className="flex text-center">
-					<button
-						className="text-md w-8 hover:bg-gray-700"
-						onClick={() => {
-							console.log('File');
-						}}
-					>
-						File
-					</button>
-					<button
-						className="text-md w-8 hover:bg-gray-700"
-						onClick={() => {
-							console.log('Edit');
-						}}
-					>
-						Edit
-					</button>
+					<button className="text-md w-8 hover:bg-gray-700">File</button>
+					<button className="text-md w-8 hover:bg-gray-700">Edit</button>
 				</div>
 			</div>
 		</>
