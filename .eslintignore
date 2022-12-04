@@ -1,5 +1,8 @@
-src/stories/
-.storybook/
 node_modules/
 dist/
 main/
+
+src/stories/
+.storybook/
+templates/**/*.hbs
+plopfile.mjs

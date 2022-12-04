@@ -28,7 +28,8 @@
 		"no-unused-vars": 1,
 
 		// Typescript
-		"@typescript-eslint/no-explicit-any": 0
+		"@typescript-eslint/no-explicit-any": 0,
+		"@typescript-eslint/no-empty-interface": 1
 	},
 	"settings": {
 		"import/resolver": {

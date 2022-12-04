@@ -17,12 +17,12 @@
 	"scripts": {
 		"dev": "concurrently \"yarn dev:vite\" \" yarn dev:electron\"",
 		"dev:vite": "vite",
-		"dev:electron": "npm run build:electron && electron .",
-		"build": "npm run build:vite && npm run build:electron",
+		"dev:electron": "yarn build:electron && electron .",
+		"build": "yarn build:vite && yarn build:electron",
 		"build:vite": "vite build",
 		"build:electron": "tsc -p electron",
-		"dist": "npm run build && electron-builder",
-		"pack": "npm run build && electron-builder --dir",
+		"dist": "yarn build && electron-builder",
+		"pack": "yarn build && electron-builder --dir",
 		"clean": "rimraf dist main src/out",
 		"type-check": "tsc",
 		"lint": "eslint . --ext js,ts,tsx",
@@ -30,7 +30,8 @@
 		"format": "prettier --write .",
 		"prepare": "husky install",
 		"storybook": "start-storybook -p 6006",
-		"build-storybook": "build-storybook"
+		"build-storybook": "build-storybook",
+		"new-component": "plop"
 	},
 	"dependencies": {
 		"@vitejs/plugin-react": "^2.0.0",
@@ -67,6 +68,7 @@
 		"eslint-plugin-react": "^7.30.1",
 		"husky": "^8.0.0",
 		"lint-staged": "^13.1.0",
+		"plop": "^3.1.1",
 		"postcss": "^8.4.12",
 		"prettier": "^2.8.0",
 		"prettier-plugin-tailwindcss": "^0.2.0",
