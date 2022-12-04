@@ -26,6 +26,7 @@
 		// Eslint
 		"import/extensions": 0,
 		"no-unused-vars": 1,
+		"import/order": 0,
 
 		// Typescript
 		"@typescript-eslint/no-explicit-any": 0,
