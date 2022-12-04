@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn pretty-quick --staged
-yarn eslint src/ electron/ --ext js,ts,tsx
+yarn lint-staged

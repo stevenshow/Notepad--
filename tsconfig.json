@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"baseUrl": "./src",
 		"target": "ESNext",
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"types": ["vite/client", "node"],
@@ -18,5 +19,5 @@
 		"noImplicitAny": false
 	},
 	"exclude": ["node_modules"],
-	"include": ["**/*.ts", "**/*.tsx", "**/*.js"]
+	"include": ["**/*.ts", "**/*.tsx", "**/*.js", "plopfile.mjs"]
 }

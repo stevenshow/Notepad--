@@ -26,17 +26,19 @@
 		// Eslint
 		"import/extensions": 0,
 		"no-unused-vars": 1,
+		"import/order": 0,
 
 		// Typescript
-		"@typescript-eslint/no-explicit-any": 0
+		"@typescript-eslint/no-explicit-any": 0,
+		"@typescript-eslint/no-empty-interface": 1
 	},
 	"settings": {
 		"import/resolver": {
+			"typescript": {},
 			"node": {
 				"extensions": [".js", ".jsx", ".ts", ".tsx"]
 			}
 		},
 		"import/core-modules": ["electron", "electron-is-dev"]
-	},
-	"ignorePatterns": ["node_modules/", "dist/", "main/"]
+	}
 }
