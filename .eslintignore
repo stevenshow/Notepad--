@@ -1,2 +1,5 @@
-src/stories
+src/stories/
 .storybook/
+node_modules/
+dist/
+main/
