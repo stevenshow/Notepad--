@@ -1,7 +1,8 @@
 // Native
 // Packages
-import { BrowserWindow, IpcMainEvent, app, ipcMain } from 'electron';
+import { BrowserWindow, IpcMainEvent, app, dialog, ipcMain } from 'electron';
 import isDev from 'electron-is-dev';
+import fs from 'fs';
 import { join } from 'path';
 
 const height = 600;
@@ -62,6 +63,18 @@ app.whenReady().then(() => {
 		// On macOS it's common to re-create a window in the app when the
 		// dock icon is clicked and there are no other windows open.
 		if (BrowserWindow.getAllWindows().length === 0) createWindow();
+	});
+	ipcMain.on('open-file', (event) => {
+		const files = dialog.showOpenDialogSync({
+			properties: ['openFile'],
+			filters: [{ name: 'Text', extensions: ['txt'] }],
+		});
+		if (!files) return;
+
+		const file = files[0];
+		const content = fs.readFileSync(file).toString();
+		// eslint-disable-next-line no-param-reassign
+		event.returnValue = content;
 	});
 });
 

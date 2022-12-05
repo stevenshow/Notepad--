@@ -14,14 +14,17 @@ const api = {
 	/**
     Here function for AppBar
    */
-	Minimize: () => {
+	Minimize: (): void => {
 		ipcRenderer.send('minimize');
 	},
-	Maximize: () => {
+	Maximize: (): void => {
 		ipcRenderer.send('maximize');
 	},
-	Close: () => {
+	Close: (): void => {
 		ipcRenderer.send('close');
+	},
+	Open: () => {
+		return ipcRenderer.sendSync('open-file');
 	},
 	/**
 	 * Provide an easier way to listen to events
