@@ -14,6 +14,9 @@
 	"parserOptions": {
 		"project": ["./tsconfig.json"]
 	},
+	"globals": {
+		"JSX": true
+	},
 	"plugins": ["react", "@typescript-eslint", "prettier"],
 	"rules": {
 		// Prettier -- ignore errors since we have processes set up to auto-format the code
