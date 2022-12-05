@@ -13,7 +13,6 @@
 		"electron",
 		"typescript"
 	],
-	"productName": "vite-reactts-electron-starter",
 	"scripts": {
 		"dev": "concurrently \"yarn dev:vite\" \" yarn dev:electron\"",
 		"dev:vite": "vite",
@@ -34,6 +33,7 @@
 		"new-component": "plop"
 	},
 	"dependencies": {
+		"@headlessui/react": "^1.7.4",
 		"@vitejs/plugin-react": "^2.0.0",
 		"clsx": "^1.2.1",
 		"electron-is-dev": "^2.0.0",
