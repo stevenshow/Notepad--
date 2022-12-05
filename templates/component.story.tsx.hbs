@@ -11,4 +11,8 @@ export default {
   component: {{name}},
 } as ComponentMeta<typeof {{name}}>;
 
-export const Primary: ComponentStory<typeof {{name}}> = (props: {{name}}Props) => <{{name}} {...{props}} />;
+const Template: ComponentStory<typeof {{name}}> = (props: {{name}}Props) => <{{name}} {...props} />;
+
+export const Default = Template.bind({});
+
+Default.args = {};
