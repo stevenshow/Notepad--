@@ -33,6 +33,9 @@
 		"no-unused-vars": 1,
 		"import/order": 0,
 		"no-use-before-define": 0,
+		"no-case-declarations": 0,
+		"default-case": 0,
+		"prefer-const": 1,
 
 		// Typescript
 		"@typescript-eslint/no-explicit-any": 0,

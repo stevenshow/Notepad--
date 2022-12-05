@@ -1,12 +1,13 @@
 import { BaseEditor } from 'slate';
 import { ReactEditor } from 'slate-react';
 
+type CustomElement = { type: string; children: CustomText[] };
+type CustomText = { text: string; bold?: boolean };
+
 declare module 'slate' {
 	export interface CustomTypes {
 		Editor: BaseEditor & ReactEditor;
-	}
-
-	export interface BaseElement {
-		type: string;
+		Element: CustomElement;
+		Text: CustomText;
 	}
 }

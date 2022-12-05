@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from 'react';
-import { Editor, Element, Transforms, createEditor } from 'slate';
+import clsx from 'clsx';
+import { Editor, Element, Text, Transforms, createEditor } from 'slate';
 import { Editable, Slate, withReact } from 'slate-react';
 
 export interface RichTextEditorProps {}
@@ -26,25 +27,52 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 		return <El {...p} />;
 	}, []);
 
+	const renderLeaf = useCallback<any>(p => <Leaf {...p} />, []);
+
 	return (
 		<Slate editor={editor.current} value={initialValue}>
 			<Editable
 				renderElement={renderElement}
+				renderLeaf={renderLeaf}
 				onKeyDown={e => {
-					if (e.key === '`' && e.ctrlKey) {
-						// Prevent the "`" from being inserted by default.
-						e.preventDefault();
-						// Determine whether any of the currently selected blocks are code blocks.
-						const [match] = Editor.nodes(editor.current, {
-							match: n => Element.isElement(n) && n.type === 'code',
-						});
+					if (!e.ctrlKey) return;
 
-						// Otherwise, set the currently selected blocks type to "code".
-						Transforms.setNodes(
-							editor.current,
-							{ type: match ? 'paragraph' : 'code' },
-							{ match: n => Editor.isBlock(editor.current, n) }
-						);
+					switch (e.key) {
+						case '`':
+							// Prevent the "`" from being inserted by default.
+							e.preventDefault();
+
+							// Determine whether any of the currently selected blocks are code blocks.
+							// eslint-disable-next-line prefer-destructuring
+							const [matchCode] = Editor.nodes(editor.current, {
+								match: n => Element.isElement(n) && n.type === 'code',
+							});
+
+							const currentBlockIsCode = typeof matchCode !== 'undefined';
+
+							// Otherwise, set the currently selected blocks type to "code".
+							Transforms.setNodes(
+								editor.current,
+								{ type: currentBlockIsCode ? 'paragraph' : 'code' },
+								{ match: n => Editor.isBlock(editor.current, n) }
+							);
+							break;
+						case 'b':
+							e.preventDefault();
+
+							// eslint-disable-next-line prefer-destructuring
+							const [matchBold] = Editor.nodes(editor.current, {
+								match: n => Text.isText(n) && Boolean(n.bold),
+							});
+
+							const currentBlockIsBold = typeof matchBold !== 'undefined';
+
+							Transforms.setNodes(
+								editor.current,
+								{ bold: !currentBlockIsBold },
+								{ match: n => Text.isText(n), split: true }
+							);
+							break;
 					}
 				}}
 			/>
@@ -62,4 +90,14 @@ function CodeElement(props: any) {
 
 function DefaultElement(props: any) {
 	return <p {...props.attributes}>{props.children}</p>;
+}
+
+function Leaf(props: any) {
+	return (
+		// The class "font-bold" will be applied if props.leaf.bold is `true`
+		// "font-bold" being a class that comes from tailwind
+		<span {...props.attributes} className={clsx({ 'font-bold': props.leaf.bold })}>
+			{props.children}
+		</span>
+	);
 }
