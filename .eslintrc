@@ -8,7 +8,6 @@
 		"plugin:react/recommended",
 		"plugin:@typescript-eslint/recommended",
 		"airbnb",
-		"plugin:prettier/recommended",
 		"prettier"
 	],
 	"parser": "@typescript-eslint/parser",
@@ -17,16 +16,20 @@
 	},
 	"plugins": ["react", "@typescript-eslint", "prettier"],
 	"rules": {
-		"prettier/prettier": "error",
+		// Prettier -- ignore errors since we have processes set up to auto-format the code
+		"prettier/prettier": 0,
 
 		// React
 		"react/button-has-type": 0,
 		"react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
+		"react/destructuring-assignment": 0,
+		"react/jsx-props-no-spreading": 0,
 
 		// Eslint
 		"import/extensions": 0,
 		"no-unused-vars": 1,
 		"import/order": 0,
+		"no-use-before-define": 0,
 
 		// Typescript
 		"@typescript-eslint/no-explicit-any": 0,
