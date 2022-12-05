@@ -50,6 +50,20 @@ function createWindow() {
 	ipcMain.on('close', () => {
 		window.close();
 	});
+
+	ipcMain.on('open-file', (event) => {
+		const files = dialog.showOpenDialogSync(window, {
+			properties: ['openFile'],
+			filters: [{ name: 'Text', extensions: ['txt'] }],
+		});
+		if (!files) return;
+		console.log('here');
+		const file = files[0];
+		const content = fs.readFileSync(file).toString();
+		console.log('content', content);
+		// eslint-disable-next-line no-param-reassign
+		event.returnValue = content;
+	});
 }
 
 // This method will be called when Electron has finished
@@ -62,18 +76,6 @@ app.whenReady().then(() => {
 		// On macOS it's common to re-create a window in the app when the
 		// dock icon is clicked and there are no other windows open.
 		if (BrowserWindow.getAllWindows().length === 0) createWindow();
-	});
-	ipcMain.on('open-file', (event) => {
-		const files = dialog.showOpenDialogSync({
-			properties: ['openFile'],
-			filters: [{ name: 'Text', extensions: ['txt'] }],
-		});
-		if (!files) return;
-
-		const file = files[0];
-		const content = fs.readFileSync(file).toString();
-		// eslint-disable-next-line no-param-reassign
-		event.returnValue = content;
 	});
 });
 

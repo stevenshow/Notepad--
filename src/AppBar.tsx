@@ -3,7 +3,7 @@ import { Menu, Transition } from '@headlessui/react';
 import Icon from './assets/icons/Icon-Electron.png';
 
 // eslint-disable-next-line react/prop-types
-function AppBar({ content }) {
+function AppBar({ fileContent }) {
 	const [isMaximize, setMaximize] = useState(false);
 
 	const handleToggle = () => {
@@ -79,7 +79,7 @@ function AppBar({ content }) {
 												active ? 'bg-gray-600 text-white' : 'text-gray-900'
 											} flex w-full rounded-md p-2 text-sm`}
 											onClick={() => {
-												content(window.Main.Open());
+												fileContent(window.Main.Open());
 											}}
 										>
 											Open
