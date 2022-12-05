@@ -16,7 +16,14 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
 	return (
 		<Slate editor={editor.current} value={initialValue}>
-			<Editable />
+			<Editable
+				onKeyDown={(e) => {
+					if (e.key === '&') {
+						e.preventDefault();
+						editor.current.insertText('and');
+					}
+				}}
+			/>
 		</Slate>
 	);
 }
