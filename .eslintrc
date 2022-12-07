@@ -27,6 +27,8 @@
 		"react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
 		"react/destructuring-assignment": 0,
 		"react/jsx-props-no-spreading": 0,
+		"react/require-default-props": 0,
+		"react/no-unused-prop-types": 0,
 
 		// Eslint
 		"import/extensions": 0,
@@ -36,6 +38,7 @@
 		"no-case-declarations": 0,
 		"default-case": 0,
 		"prefer-const": 1,
+		"no-shadow": 1,
 
 		// Typescript
 		"@typescript-eslint/no-unused-vars": 1,
