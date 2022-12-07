@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { Editor, Element, Text, Transforms, createEditor } from 'slate';
 import { Editable, Slate, withReact } from 'slate-react';
@@ -7,12 +7,19 @@ export interface RichTextEditorProps {}
 
 export default function RichTextEditor(props: RichTextEditorProps) {
 	const editor = useRef(withReact(createEditor()));
-	const initialValue = [
-		{
-			type: 'paragraph',
-			children: [{ text: 'A line of text' }],
-		},
-	];
+	const initialValue = useMemo(() => {
+		const content = localStorage.getItem('content');
+		if (content) {
+			return JSON.parse(content);
+		}
+
+		return [
+			{
+				type: 'paragraph',
+				children: [{ text: 'A line of text' }],
+			},
+		];
+	}, []);
 
 	const renderElement = useCallback<any>(p => {
 		let El: any;
@@ -30,7 +37,17 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 	const renderLeaf = useCallback<any>(p => <Leaf {...p} />, []);
 
 	return (
-		<Slate editor={editor.current} value={initialValue}>
+		<Slate
+			editor={editor.current}
+			value={initialValue}
+			onChange={value => {
+				const isAstChange = editor.current.operations.some(op => op.type !== 'set_selection');
+				if (isAstChange) {
+					const content = JSON.stringify(value);
+					localStorage.setItem('content', content);
+				}
+			}}
+		>
 			<Editable
 				renderElement={renderElement}
 				renderLeaf={renderLeaf}
