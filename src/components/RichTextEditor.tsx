@@ -1,7 +1,10 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import clsx from 'clsx';
 import { Editor, Element, Text, Transforms, createEditor } from 'slate';
-import { Editable, Slate, withReact } from 'slate-react';
+import { Editable, RenderElementProps, RenderLeafProps, Slate, withReact } from 'slate-react';
+
+type RenderElement = (props: RenderElementProps) => JSX.Element;
+type RenderLeaf = (props: RenderLeafProps) => JSX.Element;
 
 export interface RichTextEditorProps {}
 
@@ -20,9 +23,8 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 			},
 		];
 	}, []);
-
-	const renderElement = useCallback<any>(p => {
-		let El: any;
+	const renderElement = useCallback<RenderElement>(p => {
+		let El: RenderElement;
 		switch (p.element.type) {
 			case 'code':
 				El = CodeElement;
@@ -34,7 +36,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 		return <El {...p} />;
 	}, []);
 
-	const renderLeaf = useCallback<any>(p => <Leaf {...p} />, []);
+	const renderLeaf = useCallback<RenderLeaf>(p => <Leaf {...p} />, []);
 
 	return (
 		<Slate
@@ -97,7 +99,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 	);
 }
 
-function CodeElement(props: any) {
+function CodeElement(props: RenderElementProps) {
 	return (
 		<pre {...props.attributes}>
 			<code>{props.children}</code>
@@ -105,11 +107,11 @@ function CodeElement(props: any) {
 	);
 }
 
-function DefaultElement(props: any) {
+function DefaultElement(props: RenderElementProps) {
 	return <p {...props.attributes}>{props.children}</p>;
 }
 
-function Leaf(props: any) {
+function Leaf(props: RenderLeafProps) {
 	return (
 		// The class "font-bold" will be applied if props.leaf.bold is `true`
 		// "font-bold" being a class that comes from tailwind
