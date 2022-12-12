@@ -5,7 +5,6 @@ import { DefaultElement, withReact } from 'slate-react';
 import { RenderElement } from '.';
 import { RichTextEditorProps } from './RichTextEditor';
 import CodeBlock from './content-blocks/CodeBlock';
-import PlaceholderBlock, { PlaceholderBlockElement } from './content-blocks/PlaceholderBlock';
 import PlainTextBlock from './content-blocks/PlainTextBlock';
 
 export default function useRichTextEditor({ value, onChange }: RichTextEditorProps) {
@@ -21,9 +20,6 @@ export default function useRichTextEditor({ value, onChange }: RichTextEditorPro
 			case 'paragraph':
 				El = PlainTextBlock;
 				break;
-			case 'placeholder':
-				El = PlaceholderBlock;
-				break;
 			default:
 				El = DefaultElement;
 				break;
@@ -32,21 +28,7 @@ export default function useRichTextEditor({ value, onChange }: RichTextEditorPro
 		return El(props);
 	}, []);
 
-	if (value.length === 0) {
-		value.push(PlaceholderBlockElement);
-	}
-
 	const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-		if (editor.children.length === 1 && e.key.length === 1) {
-			Transforms.setNodes(
-				editor,
-				{ type: 'paragraph', children: [{ text: e.key }] },
-				{ match: n => Element.isElement(n) && n.type === 'placeholder' }
-			);
-
-			return;
-		}
-
 		if (!e.ctrlKey) return;
 
 		switch (e.key) {
@@ -72,12 +54,16 @@ export default function useRichTextEditor({ value, onChange }: RichTextEditorPro
 				e.preventDefault();
 
 				const [matchBold] = Editor.nodes(editor, {
-					match: n => Text.isText(n) && Boolean(n.bold),
+					match: n => Text.isText(n) && Boolean(n.attributes?.bold),
 				});
 
 				const currentBlockIsBold = typeof matchBold !== 'undefined';
 
-				Transforms.setNodes(editor, { bold: !currentBlockIsBold }, { match: n => Text.isText(n), split: true });
+				Transforms.setNodes(
+					editor,
+					{ attributes: { bold: !currentBlockIsBold } },
+					{ match: n => Text.isText(n), split: true }
+				);
 				break;
 		}
 	};
