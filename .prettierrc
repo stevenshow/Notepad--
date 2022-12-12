@@ -13,7 +13,7 @@
 		"^react$",
 		"^react.*",
 		"<THIRD_PARTY_MODULES>",
-		"^(src/)?components",
+		"^(src/)?(plugins|model|components|assets)",
 		"^[./](?!.*\\.s?css$)",
 		".*\\.s?css$"
 	],

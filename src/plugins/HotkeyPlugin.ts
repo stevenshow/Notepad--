@@ -1,18 +1,10 @@
 import React from 'react';
 import { Editor } from 'slate';
-
-type HotkeyModifier = 'shift' | 'alt' | 'ctrl' | 'meta';
-
-export interface Hotkey {
-	id?: string;
-	key: string;
-	modifiers: HotkeyModifier[];
-	action: (editor: Editor, e: KeyEvent) => any;
-}
+import { Hotkey } from 'model/Hotkeys';
 
 export interface EditorWithHotkey extends Editor {
-	registerHotkey: (hotkey: Hotkey) => boolean;
-	deregisterHotkey: (args: DeregisterHotkeyArgs) => boolean;
+	registerHotkey: (hotkey: Hotkey) => VoidFunction;
+	deregisterHotkey: (args: DeregisterHotkeyArgs) => void;
 	onKeyDown: (event: KeyEvent) => void;
 }
 
@@ -26,12 +18,11 @@ export interface EditorWithHotkey extends Editor {
  */
 export default function HotkeyPlugin(editor: Editor): EditorWithHotkey {
 	const hotkeyController = new HotkeyController();
-	return {
-		...editor,
+	return Object.assign(editor, {
 		registerHotkey: hotkeyController.registerHotkey,
 		deregisterHotkey: hotkeyController.deregisterHotkey,
 		onKeyDown: event => hotkeyController.onKeyDown(event, editor),
-	};
+	});
 }
 
 class HotkeyController implements Pick<EditorWithHotkey, 'registerHotkey' | 'deregisterHotkey'> {
@@ -51,23 +42,30 @@ class HotkeyController implements Pick<EditorWithHotkey, 'registerHotkey' | 'der
 		}
 	}
 
-	registerHotkey(hotkey: Hotkey): boolean {
+	/**
+	 * Registers a new hotkey to be triggered in the `onKeyDown()`
+	 * function. Returns a function that deregisters the hotkey when
+	 * called.
+	 */
+	registerHotkey(hotkey: Hotkey) {
 		if (this.hasHotkey(hotkey)) {
-			return false;
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			return () => {};
 		}
 
 		this.hotkeys.push(hotkey);
-		return true;
+		return () => this.deregisterHotkey({ hotkey });
 	}
 
-	deregisterHotkey({ hotkey, hotkeyId }: DeregisterHotkeyArgs): boolean {
+	/**
+	 * Removes the hotkey (or hotkey with the given hotkeyId) from the
+	 * list of active hotkeys.
+	 */
+	deregisterHotkey({ hotkey, hotkeyId }: DeregisterHotkeyArgs) {
 		const idx = this.hotkeyIndex(hotkey, hotkeyId);
 		if (idx !== -1) {
 			this.hotkeys.splice(idx, 1);
-			return true;
 		}
-
-		return false;
 	}
 
 	private hasHotkey(hotkey: Hotkey) {
