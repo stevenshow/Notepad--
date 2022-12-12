@@ -1,12 +1,19 @@
 import React, { useRef } from 'react';
-import { Editor, Element, Text, Transforms, createEditor } from 'slate';
+import { CustomElement, Editor, Element, Text, Transforms, createEditor } from 'slate';
 import { withHistory } from 'slate-history';
 import { withReact } from 'slate-react';
 import { RichTextEditorProps } from './RichTextEditor';
 
+const EMPTY_BLOCK: CustomElement = { type: 'paragraph', children: [{ text: '' }] };
+
 export default function useRichTextEditor({ value, onChange }: RichTextEditorProps) {
 	const editorRef = useRef(withReact(withHistory(createEditor())));
 	const editor = editorRef.current;
+
+	if (value.length === 0) {
+		value.push(EMPTY_BLOCK);
+		onChange?.(value);
+	}
 
 	const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
 		if (!e.ctrlKey) return;
