@@ -9,7 +9,7 @@ export default ({ command }: ConfigEnv): UserConfig => {
 	const baseConfig: UserConfig = {
 		root: srcRoot,
 		base: '/',
-		plugins: [react(), tsconfigPaths({ projects: [join(__dirname, 'tsconfig.json')] })],
+		plugins: [react(), tsconfigPaths({ root: __dirname })],
 		resolve: {
 			alias: {
 				'/@': srcRoot,
