@@ -1,6 +1,7 @@
 import React from 'react';
 import { Descendant } from 'slate';
 import { Editable, Slate } from 'slate-react';
+import ElementRenderer from './ElementRenderer';
 import LeafRenderer from './LeafRenderer';
 import useRichTextEditor from './useRichTextEditor';
 
@@ -10,11 +11,17 @@ export interface RichTextEditorProps {
 }
 
 export default function RichTextEditor(props: RichTextEditorProps) {
-	const { editor, value, onChange, onKeyDown, renderElement } = useRichTextEditor(props);
+	const { editor, value, onChange, onKeyDown } = useRichTextEditor(props);
 
 	return (
 		<Slate editor={editor} value={value} onChange={onChange}>
-			<Editable renderElement={renderElement} renderLeaf={LeafRenderer} onKeyDown={onKeyDown} />
+			<Editable
+				// Made these a callback instead of `renderElement={ElementRenderer}`
+				// because otherwise, changes made to them won't be hot-reloaded
+				renderElement={p => <ElementRenderer {...p} />}
+				renderLeaf={p => <LeafRenderer {...p} />}
+				onKeyDown={onKeyDown}
+			/>
 		</Slate>
 	);
 }

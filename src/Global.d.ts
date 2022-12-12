@@ -30,7 +30,6 @@ declare module 'slate' {
 		strikethrough?: boolean;
 		size?: FontSize;
 		color?: string;
-		code?: boolean;
 	}
 
 	// CustomText is rendered by the LeafRenderer

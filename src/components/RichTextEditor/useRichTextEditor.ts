@@ -1,32 +1,12 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Editor, Element, Text, Transforms, createEditor } from 'slate';
 import { withHistory } from 'slate-history';
-import { DefaultElement, withReact } from 'slate-react';
-import { RenderElement } from '.';
+import { withReact } from 'slate-react';
 import { RichTextEditorProps } from './RichTextEditor';
-import CodeBlock from './content-blocks/CodeBlock';
-import PlainTextBlock from './content-blocks/PlainTextBlock';
 
 export default function useRichTextEditor({ value, onChange }: RichTextEditorProps) {
 	const editorRef = useRef(withReact(withHistory(createEditor())));
 	const editor = editorRef.current;
-
-	const renderElement = useCallback<RenderElement>(props => {
-		let El: RenderElement;
-		switch (props.element.type) {
-			case 'code':
-				El = CodeBlock;
-				break;
-			case 'paragraph':
-				El = PlainTextBlock;
-				break;
-			default:
-				El = DefaultElement;
-				break;
-		}
-
-		return El(props);
-	}, []);
 
 	const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
 		if (!e.ctrlKey) return;
@@ -72,7 +52,6 @@ export default function useRichTextEditor({ value, onChange }: RichTextEditorPro
 		value,
 		editor,
 		onKeyDown,
-		renderElement,
 		onChange,
 	};
 }

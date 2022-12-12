@@ -12,3 +12,5 @@
 .undraggable {
 	-webkit-app-region: no-drag;
 }
+
+/* TODO: make a transition-duration utility class */
