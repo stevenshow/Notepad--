@@ -39,6 +39,8 @@
 		"default-case": 0,
 		"prefer-const": 1,
 		"no-shadow": 1,
+		"class-methods-use-this": 0,
+		"no-restricted-syntax": ["warn", "ForInStatement", "LabeledStatement", "WithStatement"],
 
 		// Typescript
 		"@typescript-eslint/no-unused-vars": 1,
