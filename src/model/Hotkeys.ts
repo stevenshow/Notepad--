@@ -145,8 +145,9 @@ function selectedTextHasAttributes(editor: Editor, attributes: Partial<TextAttri
 	return !!match;
 }
 
-const setNodeOptions = {
-	match: (n: any) => Text.isText(n),
+const setNodeOptions: Parameters<typeof Transforms.setNodes>[2] = {
+	match: n => Text.isText(n),
+	merge: (prev, next) => ({ ...prev, ...next }),
 	split: true,
 };
 
