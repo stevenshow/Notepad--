@@ -89,10 +89,9 @@ class HotkeyController implements Pick<EditorWithHotkey, 'registerHotkey' | 'der
 	private isPressingHotkey(hotkey: Hotkey, e: KeyEvent): boolean {
 		if (hotkey.key.toLowerCase() !== e.key.toLowerCase()) return false;
 		if (hotkey.modifiers.includes('alt') && !e.altKey) return false;
-		if (hotkey.modifiers.includes('ctrl') && !e.ctrlKey) return false;
 		if (hotkey.modifiers.includes('shift') && !e.shiftKey) return false;
-		if (hotkey.modifiers.includes('meta') && !e.metaKey) return false;
-		return true;
+		// This logic is to accommadate Mac users as well, since the CMD key for Mac is basically Windows CTRL
+		return (hotkey.modifiers.includes('ctrl') || hotkey.modifiers.includes('meta')) && (e.ctrlKey || e.metaKey);
 	}
 }
 
