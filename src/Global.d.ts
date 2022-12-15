@@ -4,6 +4,7 @@ import { ReactEditor } from 'slate-react';
 declare module 'slate' {
 	type CustomElementType = 'paragraph' | 'code' | 'list' | 'table' | 'media';
 	export type FontSize = 'h1' | 'h2' | 'h3' | 'h4' | 'XL' | 'L' | 'M' | 'S' | 'XS';
+	export type FontFamilyType = 'sans' | 'serif' | 'mono';
 	export type ListSymbol =
 		| 'alpha-cap'
 		| 'alpha'
@@ -18,8 +19,9 @@ declare module 'slate' {
 		url?: string;
 	}
 
-	interface TextListItem {
+	interface ElementListItem {
 		checked?: boolean;
+		symbol?: ListSymbol;
 		indent?: number;
 	}
 
@@ -37,7 +39,6 @@ declare module 'slate' {
 	interface CustomText {
 		text: string;
 		attributes?: TextAttributes;
-		listItem?: TextListItem;
 		link?: TextLink;
 	}
 
@@ -50,10 +51,12 @@ declare module 'slate' {
 	// CustomElement is rendered by the content-block
 	interface CustomElement {
 		type: CustomElementType;
-		children: CustomText[];
-		listSymbol?: ListSymbol;
+		children: CustomText[] | CustomElement[];
+		list?: ElementListItem;
 		media?: ElementMediaProperties;
-		fontFamily?: string;
+
+		// https://tailwindcss.com/docs/font-family
+		fontFamily?: FontFamilyType;
 	}
 
 	export interface CustomTypes {

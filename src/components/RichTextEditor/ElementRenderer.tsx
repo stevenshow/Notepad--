@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { DefaultElement, RenderElementProps } from 'slate-react';
 import { RenderElement } from '.';
@@ -9,33 +9,32 @@ import PlainTextBlock from './content-blocks/PlainTextBlock';
 import TableBlock from './content-blocks/TableBlock';
 
 export default function ElementRenderer(props: RenderElementProps) {
-	let Renderer: RenderElement;
-	switch (props.element.type) {
-		case 'paragraph':
-			Renderer = PlainTextBlock;
-			break;
-		case 'list':
-			Renderer = ListBlock;
-			break;
-		case 'code':
-			Renderer = CodeBlock;
-			break;
-		case 'table':
-			Renderer = TableBlock;
-			break;
-		case 'media':
-			Renderer = MediaBlock;
-			break;
-		default:
-			Renderer = DefaultElement;
-			break;
-	}
+	const Renderer = useMemo<RenderElement>(() => {
+		switch (props.element.type) {
+			case 'paragraph':
+				return PlainTextBlock;
+			case 'list':
+				return ListBlock;
+			case 'code':
+				return CodeBlock;
+			case 'table':
+				return TableBlock;
+			case 'media':
+				return MediaBlock;
+			default:
+				return DefaultElement;
+		}
+	}, [props.element.type]);
 
 	return (
 		<div
-			className={clsx('my-2 rounded-md p-2 transition-colors hover:bg-gray-100', {
-				'bg-gray-100': props.element.type === 'code',
-			})}
+			className={clsx(
+				`my-2 rounded-md p-2 transition-colors focus-within:bg-gray-100 hover:bg-gray-100`,
+				props.element.fontFamily && `font-${props.element.fontFamily}`,
+				{
+					'bg-gray-100': props.element.type === 'code',
+				}
+			)}
 		>
 			<Renderer {...props} />
 		</div>
