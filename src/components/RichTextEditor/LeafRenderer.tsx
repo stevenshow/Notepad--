@@ -44,16 +44,10 @@ function getClassNames({ bold, italic, underline, color, code, size }: TextAttri
 	});
 
 	if (code) {
-		className = clsx(
-			className,
-			'text-sm',
-			'outline',
-			'rounded-sm',
-			'p-1',
-			'outline-1',
-			'text-red-600',
-			'outline-gray-400'
-		);
+		className = clsx(className, 'outline', 'rounded-sm', 'p-1', 'outline-1', 'text-red-600', 'outline-gray-400');
+		if (size !== 'L' && size !== 'M' && size !== 'XS' && size !== 'XL') {
+			className = clsx(className, 'text-sm');
+		}
 	}
 
 	switch (size) {
@@ -62,9 +56,6 @@ function getClassNames({ bold, italic, underline, color, code, size }: TextAttri
 			break;
 		case 'S':
 			className = clsx(className, 'text-sm');
-			break;
-		case 'M':
-			className = clsx(className, 'text-base');
 			break;
 		case 'L':
 			className = clsx(className, 'text-lg');
@@ -83,6 +74,9 @@ function getClassNames({ bold, italic, underline, color, code, size }: TextAttri
 			break;
 		case 'h4':
 			className = clsx(className, 'mt-0', 'mb-0');
+			break;
+		default:
+			className = clsx(className, 'text-base');
 			break;
 	}
 

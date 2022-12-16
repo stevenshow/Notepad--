@@ -118,8 +118,10 @@ export const hkDecreaseTextSize: Hotkey = {
 	key: '-',
 	modifiers: ['ctrl', 'alt'],
 	action: (editor, e) => {
+		console.log('selection', editor.selection);
 		if (editor.selection) {
 			const [node] = Editor.node(editor, editor.selection);
+			console.log('node', node);
 			if (Text.isText(node)) {
 				e.preventDefault();
 				const currentSize = node.attributes?.size ?? 'M';

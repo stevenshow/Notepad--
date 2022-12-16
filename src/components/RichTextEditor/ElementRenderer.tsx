@@ -9,8 +9,10 @@ import PlainTextBlock from './content-blocks/PlainTextBlock';
 import TableBlock from './content-blocks/TableBlock';
 
 export default function ElementRenderer(props: RenderElementProps) {
+	const { fontFamily, type } = props.element;
+
 	const Renderer = useMemo<RenderElement>(() => {
-		switch (props.element.type) {
+		switch (type) {
 			case 'paragraph':
 				return PlainTextBlock;
 			case 'list':
@@ -24,17 +26,16 @@ export default function ElementRenderer(props: RenderElementProps) {
 			default:
 				return DefaultElement;
 		}
-	}, [props.element.type]);
+	}, [type]);
 
 	return (
 		<div
-			className={clsx(
-				`my-2 rounded-md p-2 transition-colors focus-within:bg-gray-100 hover:bg-gray-100`,
-				props.element.fontFamily && `font-${props.element.fontFamily}`,
-				{
-					'bg-gray-100': props.element.type === 'code',
-				}
-			)}
+			className={clsx(`my-2 rounded-md p-2 transition-colors focus-within:bg-gray-100 hover:bg-gray-100`, {
+				'bg-gray-100': type === 'code',
+				'font-sans': fontFamily === 'sans',
+				'font-serif': fontFamily === 'serif',
+				'font-mono': fontFamily === 'mono',
+			})}
 		>
 			<Renderer {...props} />
 		</div>
