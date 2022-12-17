@@ -30,12 +30,16 @@ export default function ElementRenderer(props: RenderElementProps) {
 
 	return (
 		<div
-			className={clsx('element-renderer', `my-2 rounded-md p-2 transition-colors hover:bg-gray-100`, {
-				'bg-gray-100': type === 'code',
-				'font-sans': fontFamily === 'sans',
-				'font-serif': fontFamily === 'serif',
-				'font-mono': fontFamily === 'mono',
-			})}
+			className={clsx(
+				'element-renderer',
+				`my-2 rounded-md p-2 transition-colors duration-300 hover:bg-gray-100`,
+				{
+					'bg-gray-100': type === 'code',
+					'font-sans': fontFamily === 'sans',
+					'font-serif': fontFamily === 'serif',
+					'font-mono': fontFamily === 'mono',
+				}
+			)}
 		>
 			<Renderer {...props} />
 		</div>

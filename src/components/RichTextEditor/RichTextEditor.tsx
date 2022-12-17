@@ -13,6 +13,10 @@ export interface RichTextEditorProps {
 export default function RichTextEditor(props: RichTextEditorProps) {
 	const { editor, value, onChange, onKeyDown } = useRichTextEditor(props);
 
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	// window.editor = editor;
+
 	return (
 		<Slate editor={editor} value={value} onChange={onChange}>
 			<Editable

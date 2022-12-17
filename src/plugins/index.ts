@@ -1,10 +1,12 @@
 import { Editor } from 'slate';
+import EnterKeyPlugin from './EnterKeyPlugin';
 import HotkeyPlugin from './HotkeyPlugin';
 
 // ========================================================================
 // When adding a plugin to this file, add the plugin function to the
 // list of plugin functions in withPlugins(), and update the ExtendedEditor
-// type above with "& ReturnType<typeof pluginfunctionname>"
+// type above with "& ReturnType<typeof pluginfunctionname>" if the plugin
+// adds any new properties to the Editor interface.
 // ========================================================================
 
 type PluginFn = (editor: Editor) => Editor;
@@ -16,7 +18,7 @@ type ExtendedEditor = Editor & ReturnType<typeof HotkeyPlugin>;
  * as well as https://docs.slatejs.org/concepts/08-plugins.
  */
 export default function withPlugins(editor: Editor) {
-	const plugins: PluginFn[] = [HotkeyPlugin];
+	const plugins: PluginFn[] = [HotkeyPlugin, EnterKeyPlugin];
 
 	let editorWithPlugins = editor;
 
