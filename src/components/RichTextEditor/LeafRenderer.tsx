@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { TextAttributes } from 'slate';
-import { RenderLeafProps } from 'slate-react';
+import { RenderLeafProps, useSelected } from 'slate-react';
 
 // "Leaf"s are used for rendering the individual text nodes,
 // "Element"s are used for rendering a chunk of leaves
@@ -11,9 +11,10 @@ export default function LeafRenderer({ attributes, leaf, children }: RenderLeafP
 
 	const RenderElement = getRenderElement(leafAttrs);
 	const className = getClassNames(leafAttrs);
+	const hasSelection = useSelected();
 
 	return (
-		<RenderElement {...attributes} className={className}>
+		<RenderElement {...attributes} className={clsx(className, { 'has-selection': hasSelection })}>
 			{children}
 		</RenderElement>
 	);

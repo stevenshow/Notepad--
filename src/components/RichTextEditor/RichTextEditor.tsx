@@ -21,6 +21,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 				renderElement={p => <ElementRenderer {...p} />}
 				renderLeaf={p => <LeafRenderer {...p} />}
 				onKeyDown={onKeyDown}
+				autoFocus
 			/>
 		</Slate>
 	);

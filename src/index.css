@@ -14,3 +14,8 @@
 }
 
 /* TODO: make a transition-duration utility class */
+
+.element-renderer:has(.has-selection) {
+	/* https://tailwindcolor.com/ gray-100 with 50% opacity */
+	background-color: rgba(244, 244, 245, 0.5);
+}
